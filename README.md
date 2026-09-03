@@ -1,197 +1,205 @@
-Vault Coin (VLT)
+SafeVault™ Overview
 
-Public Project Overview and Pre-Deployment Record
+Self-Custody Digital Asset Infrastructure for BlackVault Public Network™
 
-Current status — September 2, 2026: Vault Coin (VLT) is under pre-deployment technical review. It has not been deployed to Sepolia, Ethereum mainnet, or any other blockchain network. No official VLT proxy address, implementation address, or deployment transaction has been recorded.
+Development status: Private pre-deployment repository
 
-Vault Coin (VLT) is an owner-managed ERC-20 token project built with an ERC-1967 proxy and the OpenZeppelin UUPS upgrade pattern. This page documents the approved design, control model, validation work, and development journey before deployment.
+SafeVault™ is in development as the self-custody digital asset wallet and management layer of BlackVault Public Network™.
 
-Repository builds, tests, simulations, commits, pull requests, and GitHub Actions results are development evidence only. None of them proves that a blockchain deployment has occurred.
+It is being designed to give each user direct control over an assigned Digital Asset Vault through cryptographic wallet signatures. Transactions and protected account actions must be authorized by the wallet holder.
 
-Documentation boundaries
+Under the planned account policy, a user may have no more than one active SafeVault™ account at any given time. The user may close or disable the SafeVault application account, transfer supported ownership controls where the final account architecture permits, or transfer assets out of the Vault. Following closure, the user may create a new Vault. Closing a SafeVault application account will not erase an address, transaction, or other record already written to a public blockchain.
 
-This public page is a documentation record. It is maintained separately from the Vault Coin source-code repository and its development jobs.
+No person or entity—including BlackVault operators or management, automated or AI-connected systems, application administrators, a user’s friends or family, or any other third party—is permitted to possess, store, use, transfer, sign with, or otherwise control another user’s master VaultKey™. No such person or entity should be capable of independently accessing protected account information beyond information already public on the blockchain; accessing or transferring funds; authorizing, rejecting, or interrupting transactions; transferring user-held assets; or preventing the authorized holder from accessing the Vault.
 
-Vault Coin (VLT), the BlackVault Public Network, and SafeVault are separate projects and should be documented on separate pages. A reference between their pages does not establish a shared deployment, contract integration, wallet, treasury, ownership structure, or authorization relationship.
+BLACKVAULT DOES NOT HOLD, STORE, OR MANAGE A USER’S SECRET VAULTKEY™.
 
-The separate Safe at 0xB06A1DDcb9b31ecBb1a298C68954220FF96E3a03, as well as any nested Safe, is outside the Vault Coin token authorization model.
+If a user loses a VaultKey™, BlackVault cannot locate, view, recreate, reset, or disclose that credential. Access can be restored only through a valid backup—such as the applicable recovery phrase, private key, hardware device, or a recovery method configured and authorized before access was lost. The blockchain itself cannot retrieve or recreate a lost secret key. If no valid backup or preconfigured recovery method exists, access to the associated assets may be permanently lost.
 
-Approved VLT design
+SafeVault™ is intended to provide the wallet infrastructure through which users can view, manage, receive, and transfer supported blockchain assets. Future development is expected to include support for Vault Coin™ (VLT), an ERC-20 token, and other approved Ethereum-compatible assets.
 
-Property
+Ecosystem Structure
 
-Approved value
+BlackVault Public Network™
 
-Name
+BlackVault Public Network™ is the broader blockchain ecosystem under which SafeVault™ and Vault Coin™ are being developed. It provides the project’s technical direction, operational framework, and public network identity.
 
-Vault Coin
+SafeVault™
 
-Symbol
+SafeVault™ is the self-custody wallet and digital asset management layer. Its purpose is to provide users with a security-focused interface for interacting with supported blockchain assets while preserving user-controlled authorization.
 
-VLT
+User Vault™
 
-Decimals
+Each User Vault™ is intended to operate as an individually controlled blockchain account. Access and transaction approval must originate from the authorized holder’s wallet credentials and a valid cryptographic signature.
 
-18
+Vault Coin™ (VLT)
 
-Initial supply
+Vault Coin™ is the developing ERC-20 network asset of BlackVault Public Network™. SafeVault™ is intended to support the storage, display, transfer, and management of VLT after the token and wallet integrations have completed testing, review, and deployment approval.
 
-100,000,000 VLT
+Separate but Connected Systems
 
-Lifetime issuance ceiling
+SafeVault™ and Vault Coin™ remain separate systems.
 
-420,000,000 VLT
+SafeVault™ provides wallet access and asset-management functionality, while the Vault Coin smart contract governs VLT supply and token-level operations. Holding or managing VLT through SafeVault does not replace, override, or remove the rules and administrative controls defined by the Vault Coin smart contract.
 
-Intended initial owner
+Core Principles
 
-0xc1cC3138699e07B6d7b990DBa8fAE30b332a1eA6
+Self-custody: Users retain control of their wallet credentials and transaction authority.
 
-Initial token recipient
+User authorization: Asset transfers and protected actions require a valid signature from the authorized wallet holder.
 
-0xc1cC3138699e07B6d7b990DBa8fAE30b332a1eA6
+No centralized master access: SafeVault is not intended to provide BlackVault operators with unrestricted access to user-held assets.
 
-Initial administrative-burn fee
+Transparent development: Smart contracts, permissions, dependencies, and deployment procedures must be documented and reviewable.
 
-100 basis points (1%)
+Security by design: Sensitive information must be isolated from application code, logs, repositories, and public interfaces.
 
-Proxy architecture
+Progressive testing: Development must move through local testing, automated analysis, testnet deployment, security review, and approval before production use.
 
-ERC-1967 proxy with owner-authorized UUPS upgrades
+Decentralized participation: SafeVault is being designed to let users interact directly with blockchain assets without surrendering custody to the application operator.
 
-Ownership transfer
+Decentralization Framework
 
-Two-step transfer to a deployed contract or Safe
+A decentralized system distributes validation or operational control across independent participants, nodes, or entities, reducing reliance on a single authority. Within the SafeVault ecosystem, decentralization refers primarily to the underlying blockchain network, cryptographic transaction authorization, and the user’s control over asset custody.
 
-Ownership renunciation
+This is the philosophy behind a Vault rather than a conventional custodial Wallet: a Vault is intended to operate as a secure, user-controlled container that interacts with a decentralized network instead of surrendering asset custody to a centralized operator.
 
-Prohibited; the contract is not intended to enter a zero-owner state
+In the SafeVault™ context:
 
-The intended owner is the existing non-nested Vault Coin Safe at 0xc1cC3138699e07B6d7b990DBa8fAE30b332a1eA6.
+Users hold and control their own keys; SafeVault does not own their assets.
 
-Lifetime issuance ceiling
+The Vault interacts with decentralized blockchain networks rather than relying exclusively on a central asset ledger.
 
-The 420,000,000 VLT limit is a lifetime issuance ceiling in the reviewed implementation. Tokens that are burned remain counted as previously issued, so burning does not restore minting capacity.
+The integrity of on-chain transactions and balances comes from the underlying blockchain’s consensus mechanism, rather than from a single SafeVault server.
 
-The limit is not immutable. Because the owner can authorize a UUPS implementation upgrade, a future owner-approved upgrade could technically modify or remove this rule. Preservation of the ceiling therefore depends on governance, review, and owner authorization.
+The final SafeVault application may still use interfaces, hosting services, network providers, or other off-chain components. Those components are not automatically decentralized merely because they interact with a blockchain. Their architecture, permissions, and availability must be evaluated and documented separately.
 
-Privileged owner controls
+Structural Objectives
 
-The reviewed design gives the owner authority to:
+Reduced concentration of control: User asset custody and transaction authority should not depend on unilateral access by BlackVault, a single application administrator, server operator, or government entity. Separate governance or administrative controls belonging to Vault Coin or other integrated systems remain governed by their respective contracts and documented policies.
 
-mint VLT within the remaining lifetime issuance allowance;
+Reduced single points of failure: The design should minimize reliance on any one application service or infrastructure provider. If one underlying blockchain node becomes unavailable, other available nodes may continue serving the network.
 
-pause and unpause ordinary token movement;
+Functional Characteristics
 
-blacklist and unblacklist accounts;
+Multiple independent nodes or participants maintain the underlying blockchain network.
 
-administratively burn VLT from a holder without an allowance and charge a configurable VLT fee;
+Blockchain rules are enforced through the applicable consensus mechanism and shared protocol.
 
-administratively transfer VLT from an account to an owner-selected address;
+On-chain data is replicated across the underlying network rather than stored in one location.
 
-change the administrative-burn fee and its recipient;
+Off-chain SafeVault data, if any, must be separately documented, protected, and evaluated according to its actual storage architecture.
 
-recover unrelated ERC-20 tokens and ETH held by the proxy;
+Why Decentralization Matters
 
-begin a two-step ownership transfer; and
+Resilience: Distributed blockchain infrastructure is more resistant to interruption or censorship at a single point.
 
-authorize implementation upgrades.
+Security: Compromise or failure of one network node does not, by itself, compromise the entire blockchain.
 
-These controls are unusually powerful and must be clearly disclosed to prospective holders.
+Transparency: Public blockchain state and confirmed transactions can be independently verified.
 
-Administrative burns and administrative transfers are designed to bypass the ordinary pause and blacklist restrictions. Each operation requires a nonzero reasonHash and emits a permanent on-chain event. The reasonHash records the evidence reference selected by the owner; the smart contract cannot determine whether the referenced reason is legally or factually justified.
+User empowerment: Individuals retain authority over their own wallet credentials, assets, and transaction approvals.
 
-At the initial 1% fee, calling adminBurn(account, 100 ether, reasonHash) requires the account to hold at least 101 VLT. The operation transfers 1 VLT to the configured fee recipient and destroys 100 VLT. It cannot burn tokens that the account does not hold or create a negative balance.
+Planned Capabilities
 
-Holder controls
+SafeVault™ development may include:
 
-Holders retain standard ERC-20 transfer and approval functions, subject to the contract's pause and blacklist rules. They can also:
+Creation or connection of a user-controlled Digital Asset Vault
 
-call burn(amount) to destroy their own VLT; and
+Wallet-based authentication and cryptographic signature verification
 
-call burnFrom(account, amount) to destroy VLT covered by an allowance.
+Display of supported asset balances and transaction history
 
-Holder-initiated burns do not pay the administrative-burn fee. When the token is paused, ordinary transfers, minting, and holder-initiated burns are blocked. Blacklisted accounts cannot send or receive VLT, receive newly minted VLT, burn VLT, or participate in approvals.
+Receiving and transferring approved blockchain assets
 
-Ownership safety
+Vault Coin™ (VLT) integration
 
-Calling the standard zero-argument renounceOwnership() function always reverts. The reviewed successor-based ownership process starts a two-step transfer and leaves the current owner in control until the nominated successor explicitly accepts ownership.
+Ethereum-compatible network support
 
-The contract is designed not to enter a zero-owner state intentionally. A proposed successor must be a deployed contract or Safe, rather than an ordinary externally owned wallet.
+Network, address, and transaction validation
 
-Repository structure
+Transaction confirmation and status tracking
 
-src/VaultCoin.sol — upgradeable VLT implementation
+Secure session and connection management
 
-script/DeployVaultCoin.s.sol — implementation and proxy deployment script
+Clear separation between user wallets, deployment accounts, and treasury accounts
 
-test/VaultCoin.t.sol — unit, fuzz, authorization, and upgrade tests
+Planned capabilities are not considered active until they have been implemented, tested, documented, and formally approved.
 
-test/VaultCoin.invariant.t.sol — stateful supply and ownership invariants
+Security Requirements
 
-test/DeployVaultCoin.t.sol — local deployment-script verification
+SafeVault™ development must follow these requirements:
 
-CONTROL_MODEL.md — authority and trust boundaries
+Private keys, VaultKeys™, and recovery phrases must never be committed to this repository.
 
-docs/ADMIN_OPERATIONS.md — administrative procedures and warnings
+The application must never request that users paste private keys, VaultKeys, or recovery phrases into any application interface.
 
-docs/DEPLOYMENT.md — simulation and separately authorized deployment process
+Populated .env files, RPC credentials, API secrets, and deployment keys must remain outside version control.
 
-docs/UPGRADES.md — upgrade review and execution controls
+Transactions must present the destination address, network, asset, amount, and estimated fee before signature approval.
 
-REVIEW_AUDIT.md — implementation and validation evidence
+Wallet permissions must use the least authority necessary.
 
-SECURITY.md — security assumptions and reporting policy
+Deployment credentials must remain separate from user wallets and treasury authorization.
 
-Toolchain and validation commands
+Smart contracts must receive automated testing, static analysis, and security review before deployment.
 
-Solidity 0.8.24
+Test deployments must use designated test networks and test assets.
 
-OpenZeppelin Contracts v5.0.2
+Production deployment requires separate and explicit authorization.
 
-OpenZeppelin Contracts Upgradeable v5.0.2
+Real assets must not be deposited until the relevant SafeVault components have completed security review.
 
-forge-std v1.9.6
+Self-custody places responsibility on the user. If wallet credentials or recovery information—including an applicable VaultKey™—are lost, SafeVault cannot restore access unless a separately reviewed, user-authorized recovery system was securely configured in advance. Any future recovery system must be reviewed, authorized, documented, and implemented in accordance with applicable requirements before it becomes available.
 
-Foundry v1.8.1
+Development Stages
 
-forge install OpenZeppelin/openzeppelin-contracts@v5.0.2 --no-commit
-forge install OpenZeppelin/openzeppelin-contracts-upgradeable@v5.0.2 --no-commit
-forge install foundry-rs/forge-std@v1.9.6 --no-commit
-forge fmt --check
-forge lint --deny warnings
-forge build --sizes
-forge test -vvv
+Stage 1 — Foundation: Repository setup, requirements, architecture, documentation, and security boundaries
 
-Deployment evidence standard
+Stage 2 — Prototype: Wallet interface and local blockchain integration
 
-Vault Coin must continue to be described as not deployed unless a completed network transaction can be independently verified. A public deployment record should identify, at minimum:
+Stage 3 — Contract Testing: Automated tests, permission testing, and failure-case validation
 
-the blockchain network and chain ID;
+Stage 4 — Security Review: Threat modelling, dependency review, static analysis, and remediation
 
-the official ERC-1967 proxy address;
+Stage 5 — Testnet Deployment: Controlled deployment using test assets only
 
-the implementation address;
+Stage 6 — Independent Review: External assessment and documented findings
 
-the deployment transaction hash;
+Stage 7 — Production Readiness: Final governance approval and separately authorized deployment
 
-the deployment block number and timestamp;
+Current Status
 
-the verified source-code record;
+SafeVault™ is currently in its private design and pre-deployment phase.
 
-the owner address after initialization; and
+At this stage:
 
-the initial supply recipient and recorded balance.
+The architecture and security model are under development.
 
-Until that evidence exists and is published, no address should be presented as an official VLT token contract.
+Production deployment has not been authorized.
 
-Review and risk notice
+The software has not been independently audited.
 
-This project repository and public development record are not an independent security audit, legal opinion, financial recommendation, promise of token value, or representation that VLT is available for purchase or transfer.
+SafeVault should not be treated as a finished wallet product.
 
-The owner controls are unusually powerful. Independent technical and legal review should be completed before deployment or before assigning VLT any real economic value.
+No representation is made that funds can presently be stored, recovered, or transferred through SafeVault.
 
-Project journal
+Vault Coin integration remains subject to successful testing and deployment.
 
-Future entries should clearly identify their status using labels such as Planned, In development, Under review, Approved, Simulated, or Deployed. Only a verified on-chain transaction should receive the Deployed label.
+Repository Purpose
 
-Public journal entries may summarize completed repository work, but private credentials, RPC URLs containing access keys, seed phrases, private keys, signatures, internal security procedures, and unverified wallet claims must never be published.
+This repository is intended to contain SafeVault’s approved source code, smart contracts, deployment tooling, automated tests, configuration examples, security documentation, and deployment records.
+
+Secrets, private keys, VaultKeys, recovery phrases, live credentials, and confidential user information must never be stored in this repository.
+
+Important Notice
+
+SafeVault™ is experimental software under active development. It is not a bank, exchange, brokerage, investment product, or custodial service. Nothing in this repository constitutes financial, legal, investment, or security advice.
+
+Use of production blockchain assets must remain disabled until the relevant components have been tested, reviewed, and explicitly approved for deployment.
+
+Ownership and Licensing
+
+Copyright © 2026 BlackVault Public Network™. All rights reserved.
+
+No open-source licence or permission for redistribution, production deployment, or commercial use is granted unless a licence is added to this repository in writing.
