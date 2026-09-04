@@ -36,6 +36,8 @@ Vault Coin™ (VLT)
 
 Vault Coin™ is the developing ERC-20 network asset of BlackVault Public Network™. SafeVault™ is intended to support the storage, display, transfer, and management of VLT after the token and wallet integrations have completed testing, review, and deployment approval.
 
+The current [Vault Coin framework](docs/VAULT_COIN_FRAMEWORK.md) records the confirmed token model, administrative controls, validation evidence, deployment status, and SafeVault integration boundary. The separate Vault Coin repository remains the canonical technical source; this publication does not deploy VLT or modify its contract.
+
 Separate but Connected Systems
 
 SafeVault™ and Vault Coin™ remain separate systems.
