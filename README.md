@@ -2,7 +2,7 @@ SafeVault™ Overview
 
 Self-Custody Digital Asset Infrastructure for BlackVault Public Network™
 
-Development status: Private pre-deployment repository
+Development status: Public pre-deployment repository
 
 SafeVault™ is in development as the self-custody digital asset wallet and management layer of BlackVault Public Network™.
 
