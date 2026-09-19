@@ -1,82 +1,74 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
-  <title id="title">SafeVault technical architecture</title>
-  <desc id="desc">Publication diagram showing the holder-controlled signing boundary, the SafeVault application, blockchain connectivity, supported contracts, and the separation between SafeVault and Vault Coin administration.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">SafeVault wallet and Vault AI architecture</title>
+  <desc id="desc">Target architecture. SafeVault Homebase is the primary smart account and external wallets are optional separate accounts. Vault AI prepares evidence and handoffs using configured discovery tools. The holder reviews actions and the chosen wallet account authorizes execution. Provider and account implementation choices remain pending.</desc>
   <defs>
-    <linearGradient id="purple" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#8b5cf6"/>
-      <stop offset="1" stop-color="#d946ef"/>
-    </linearGradient>
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#111827" flood-opacity="0.12"/>
-    </filter>
-    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
-      <path d="M0 0 L12 6 L0 12 Z" fill="#7c3aed"/>
-    </marker>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6d4bc3"/></marker>
     <style>
-      .eyebrow{font:700 20px Inter,Arial,sans-serif;letter-spacing:3px;fill:#7c3aed}
-      .title{font:800 54px Inter,Arial,sans-serif;fill:#111827}
-      .subtitle{font:400 22px Inter,Arial,sans-serif;fill:#4b5563}
-      .box-title{font:750 25px Inter,Arial,sans-serif;fill:#111827}
-      .box-copy{font:400 17px Inter,Arial,sans-serif;fill:#4b5563}
-      .label{font:700 16px Inter,Arial,sans-serif;fill:#6d28d9;letter-spacing:.6px}
-      .footer{font:500 16px Inter,Arial,sans-serif;fill:#6b7280}
-      .card{fill:#fff;stroke:#e5e7eb;stroke-width:2;rx:24;filter:url(#shadow)}
-      .flow{fill:none;stroke:#7c3aed;stroke-width:4;marker-end:url(#arrow)}
-      .return{fill:none;stroke:#a78bfa;stroke-width:3;stroke-dasharray:9 10;marker-end:url(#arrow)}
+      text { font-family: Arial, Helvetica, sans-serif; fill: #252036; }
+      .title { font-size: 46px; font-weight: 700; }
+      .sub { font-size: 22px; fill: #625a71; }
+      .section { font-size: 19px; letter-spacing: 2px; font-weight: 700; fill: #6d4bc3; }
+      .heading { font-size: 27px; font-weight: 700; }
+      .body { font-size: 21px; }
+      .small { font-size: 18px; fill: #625a71; }
+      .panel { fill: #ffffff; stroke: #dad3e8; stroke-width: 2; }
+      .flow { fill: none; stroke: #6d4bc3; stroke-width: 3; marker-end: url(#arrow); }
     </style>
   </defs>
-  <rect width="1600" height="900" fill="#f8fafc"/>
-  <circle cx="1450" cy="80" r="210" fill="#f3e8ff" opacity=".72"/>
-  <circle cx="120" cy="850" r="250" fill="#ede9fe" opacity=".7"/>
+  <rect width="1600" height="1000" fill="#f8f6fc"/>
+  <text x="64" y="82" class="title">SafeVault + Vault AI</text>
+  <text x="64" y="122" class="sub">Target architecture · Primary smart account, optional external wallets, evidence-based assistance</text>
+  <rect x="64" y="160" width="936" height="674" rx="24" fill="#f0ebfa"/>
+  <rect x="1032" y="160" width="504" height="674" rx="24" fill="#f0ebfa"/>
+  <text x="96" y="203" class="section">WALLET AND AUTHORIZATION</text>
+  <text x="1064" y="203" class="section">WORKSPACE AGENT</text>
 
-  <text x="90" y="80" class="eyebrow">BLACKVAULT PUBLIC NETWORK™</text>
-  <text x="90" y="145" class="title">SafeVault™ Technical Architecture</text>
-  <text x="90" y="186" class="subtitle">Planned self-custody transaction path • Public pre-deployment framework • September 4, 2026</text>
+  <rect x="96" y="228" width="872" height="132" rx="18" class="panel"/>
+  <text x="124" y="270" class="heading">Holder + SafeVault application</text>
+  <text x="124" y="306" class="body">Sign in to Homebase · Select account and network · Review the action</text>
+  <text x="124" y="338" class="small">Application login, account initialization, and wallet authorization are separate.</text>
 
-  <rect x="90" y="255" width="300" height="250" class="card"/>
-  <rect x="112" y="277" width="72" height="72" rx="18" fill="url(#purple)"/>
-  <path d="M135 314h26M148 301v26" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
-  <text x="112" y="395" class="box-title">Authorized Holder</text>
-  <text x="112" y="430" class="box-copy">Controls wallet credentials</text>
-  <text x="112" y="459" class="box-copy">Reviews transaction details</text>
-  <text x="112" y="488" class="box-copy">Signs or rejects the action</text>
+  <path d="M 316 360 V 438" class="flow"/>
+  <path d="M 750 360 V 438" class="flow"/>
+  <text x="344" y="405" class="small">Primary</text>
+  <text x="778" y="405" class="small">Optional</text>
+  <rect x="96" y="448" width="420" height="172" rx="18" class="panel"/>
+  <text x="120" y="490" class="heading">Homebase smart account</text>
+  <text x="120" y="530" class="body">Primary BlackVault account</text>
+  <text x="120" y="564" class="body">ERC-4337-style execution</text>
+  <text x="120" y="598" class="small">Implementation and recovery choices pending</text>
+  <rect x="548" y="448" width="420" height="172" rx="18" class="panel"/>
+  <text x="572" y="490" class="heading">Connected external wallets</text>
+  <text x="572" y="530" class="body">Separate addresses and balances</text>
+  <text x="572" y="564" class="body">Each wallet keeps its own authority</text>
+  <text x="572" y="598" class="small">Connecting does not move assets or delegate</text>
+  <path d="M 306 620 V 672" class="flow"/>
+  <path d="M 758 620 V 672" class="flow"/>
+  <rect x="96" y="682" width="872" height="120" rx="18" class="panel"/>
+  <text x="124" y="724" class="heading">Authorized execution through the selected account</text>
+  <text x="124" y="760" class="body">Holder confirmation · Account validation · Submission · Receipt and outcome</text>
+  <text x="124" y="788" class="small">Future automation requires separately enabled, limited, revocable permissions.</text>
 
-  <rect x="490" y="255" width="390" height="250" class="card"/>
-  <rect x="512" y="277" width="346" height="10" rx="5" fill="url(#purple)"/>
-  <text x="522" y="342" class="box-title">SafeVault Application</text>
-  <text x="522" y="380" class="box-copy">Builds the transaction request</text>
-  <text x="522" y="409" class="box-copy">Shows network, asset, amount &amp; fee</text>
-  <text x="522" y="438" class="box-copy">Tracks confirmation and failure states</text>
-  <text x="522" y="474" class="label">NO PRIVATE-KEY CUSTODY</text>
+  <rect x="1064" y="228" width="440" height="166" rx="18" class="panel"/>
+  <text x="1088" y="270" class="heading">Vault AI in Botpress</text>
+  <text x="1088" y="310" class="body">Knowledge, workflows, tools, cases</text>
+  <text x="1088" y="344" class="body">Explain evidence and prepare handoffs</text>
+  <text x="1088" y="376" class="small">Agent configuration is the current scope</text>
+  <path d="M 1064 286 H 978" class="flow"/>
+  <path d="M 1284 472 V 404" class="flow"/>
+  <text x="1302" y="440" class="small">Evidence</text>
+  <rect x="1064" y="482" width="440" height="206" rx="18" class="panel"/>
+  <text x="1088" y="524" class="heading">Discovery and claim checks</text>
+  <text x="1088" y="566" class="body">Etherscan / configured provider reads</text>
+  <text x="1088" y="602" class="body">Protocol-specific eligibility adapter</text>
+  <text x="1088" y="644" class="small">Read-helper source is present.</text>
+  <text x="1088" y="672" class="small">Live bindings and first claim support pending.</text>
+  <text x="1088" y="744" class="body">Visible asset → Candidate claim</text>
+  <text x="1088" y="778" class="body">Validated eligibility → Confirmed result</text>
 
-  <rect x="980" y="255" width="530" height="250" class="card"/>
-  <circle cx="1040" cy="325" r="34" fill="#111827"/>
-  <path d="M1023 325h34M1040 308v34" stroke="#c084fc" stroke-width="5"/>
-  <text x="1095" y="320" class="box-title">Ethereum-Compatible Network</text>
-  <text x="1095" y="353" class="box-copy">Independent nodes and public chain state</text>
-  <line x1="1016" y1="392" x2="1472" y2="392" stroke="#e5e7eb" stroke-width="2"/>
-  <text x="1018" y="432" class="box-copy">• Address, balance and transaction reads</text>
-  <text x="1018" y="462" class="box-copy">• Signed transaction broadcast and confirmation</text>
-  <text x="1018" y="492" class="box-copy">• Supported token and smart-contract interaction</text>
-
-  <path d="M390 350 C430 350 446 350 486 350" class="flow"/>
-  <text x="410" y="330" class="label">SIGN</text>
-  <path d="M880 350 C920 350 936 350 976 350" class="flow"/>
-  <text x="896" y="330" class="label">SUBMIT</text>
-  <path d="M980 445 C940 540 430 540 390 445" class="return"/>
-  <text x="624" y="559" class="label">READABLE PUBLIC CONFIRMATION</text>
-
-  <rect x="90" y="630" width="690" height="156" rx="24" fill="#111827" filter="url(#shadow)"/>
-  <text x="122" y="674" style="font:750 24px Inter,Arial,sans-serif;fill:#fff">Holder-Controlled Trust Boundary</text>
-  <text x="122" y="712" style="font:400 17px Inter,Arial,sans-serif;fill:#d1d5db">SafeVault may prepare, display and monitor an action.</text>
-  <text x="122" y="742" style="font:400 17px Inter,Arial,sans-serif;fill:#d1d5db">It must not possess the holder’s VaultKey™, private key or recovery phrase.</text>
-  <text x="122" y="772" style="font:700 17px Inter,Arial,sans-serif;fill:#c084fc">Authorization remains with the holder’s cryptographic signature.</text>
-
-  <rect x="820" y="630" width="690" height="156" rx="24" fill="#fff" stroke="#d8b4fe" stroke-width="3" filter="url(#shadow)"/>
-  <text x="852" y="674" class="box-title">Vault Coin Integration Boundary</text>
-  <text x="852" y="712" class="box-copy">SafeVault may display and submit holder-authorized VLT actions.</text>
-  <text x="852" y="742" class="box-copy">The separate VLT contract governs supply and owner controls.</text>
-  <text x="852" y="772" class="label">WALLET CUSTODY ≠ TOKEN ADMINISTRATION</text>
-
-  <text x="90" y="850" class="footer">Current publication describes the approved design boundary; it does not represent a deployed or independently audited wallet.</text>
+  <path d="M 532 802 V 870" class="flow"/>
+  <path d="M 1520 880 V 606 H 1510" class="flow" stroke-dasharray="7 7"/>
+  <rect x="64" y="880" width="1472" height="64" rx="16" fill="#e5dcf5"/>
+  <text x="96" y="920" class="body">Blockchain records · Ethereum mainnet recovery / VLT target · Separate Sepolia context for FUN</text>
+  <text x="64" y="978" class="small">BlackVault Public Network · 2026-09-18 · Account providers, live services, and deployments retain separate implementation records.</text>
 </svg>

@@ -1,122 +1,79 @@
-# SafeVault™ — Current Framework and Technical Architecture
+# SafeVault — Current Framework
 
-**Updated:** September 4, 2026  
-**Project:** SafeVault™  
-**Organization:** BlackVault Public Network™  
-**Current stage:** Foundation and pre-deployment design  
-**Repository status:** Public documentation repository
+**Updated:** 2026-09-18 · **Owner:** BlackVault Public Network · **Status:** Confirmed product direction; implementation in progress
 
-![SafeVault technical architecture](https://raw.githubusercontent.com/blackvault-opps/SafeVault_deploy-repo/main/docs/assets/safevault-technical-architecture.svg)
+![SafeVault account architecture](assets/safevault-technical-architecture.svg)
 
-## Current project definition
+## Account architecture
 
-SafeVault™ is being developed as the self-custody digital-asset wallet and management layer of BlackVault Public Network™. Its purpose is to give a holder a security-focused interface for viewing, receiving, managing and transferring supported blockchain assets while preserving holder-controlled authorization.
+SafeVault has two wallet layers:
 
-SafeVault is not intended to take custody of a user's secret credentials. A protected asset transfer must be approved through a valid cryptographic signature produced by the authorized holder's wallet or by a separately reviewed smart-account execution path configured by that holder.
+1. **Homebase — the primary BlackVault smart account.** A user signs in to the BlackVault application to reach their Homebase workspace, assets, activity, and account controls. The approved product direction starts with a holder-controlled smart account. Application login, account initialization, and blockchain authorization are separate operations.
+2. **Connected external wallets — an optional second layer.** Existing compatible wallets retain their own addresses, networks, balances, and permissions. Connecting one enables supported visibility and interaction; moving assets into Homebase is a separately authorized transfer.
 
-## Confirmed design principles
+The primary design uses an ERC-4337-style account model. Optional EIP-7702 support for compatible external EOAs is a separate integration proposal. A connected wallet is not evidence of an active delegation. Account deployment timing, gas arrangements, authentication/recovery, and infrastructure providers remain implementation selections.
 
-| Principle | Current requirement |
-|---|---|
-| Self-custody | The holder controls the wallet credentials and transaction authority. |
-| Holder authorization | Protected actions require a valid holder-authorized signature. |
-| No operator master access | BlackVault staff, administrators and automated systems must not possess or exercise a user's VaultKey™, private key or recovery phrase. |
-| Transaction clarity | The interface must show the network, asset, destination, amount and estimated fee before signature approval. |
-| Separation of roles | User wallets, deployment accounts, treasury accounts and token-owner authority must remain distinguishable. |
-| Public verification | On-chain balances, transactions and contract activity should be independently verifiable. |
-| Secret isolation | Keys, recovery phrases, live credentials and populated environment files must remain outside public code, logs and repositories. |
-| Progressive validation | Local testing, automated analysis, testnet review, security assessment and explicit approval precede production use. |
+Assets remain recorded on their respective blockchains. Homebase brings those records into a coordinated interface; signing in does not merge accounts or transfer balances.
 
-## Planned account policy
+The existing application-policy design allows one active Homebase profile per user. Optional connected addresses remain separately identified accounts. Profile closure and replacement do not erase blockchain records. The final recovery/authentication method remains an implementation decision; the architecture does not assume a particular passkey, backup phrase, or recovery provider.
 
-The current policy design permits no more than one active SafeVault application account per user at a time. A holder may close or disable the application account, move supported assets out of the Vault, and later create a new Vault where the final architecture permits.
+## Responsibilities
 
-Closing an application account cannot erase an address, transaction or record already written to a public blockchain.
+| Component | Responsibility |
+| --- | --- |
+| BlackVault Public Network | Ecosystem identity, application framework, and documentation |
+| SafeVault | Homebase, external wallet connections, asset presentation, review, and account authorization |
+| Vault AI | Workspace assistance, approved knowledge, public-data discovery, evidence explanation, and prepared handoffs |
+| Discovery/claim backend | Provider requests, contract-specific eligibility checks, and structured evidence |
+| Wallet execution infrastructure | Validate holder authorization, submit approved operations, and return execution evidence |
 
-## VaultKey™ and recovery boundary
+Workspace administrator permissions, VLT contract-owner powers, and individual wallet authority are separate. Signing credentials remain within the holder's chosen wallet/authentication system. Future automated execution requires separately enabled, limited, revocable permissions enforced by the actual account execution layer.
 
-BlackVault is not intended to hold, store, manage, recreate or disclose a user's secret VaultKey™, private key or recovery phrase.
+## Network roles
 
-Access may be restored only through a valid holder-controlled backup—such as the applicable recovery phrase, private key or hardware device—or through a recovery method that was separately reviewed, securely configured and authorized by the holder before access was lost. If no valid backup or approved recovery path exists, access to the associated assets may be permanently lost.
+| Context | Network | Configuration status |
+| --- | --- | --- |
+| Vault Coin (VLT) | Ethereum mainnet, `1` | Production proxy and deployment receipt pending |
+| FUNTOKEN (FUN) | Sepolia, `11155111` | Three recorded deployments; shared canonical address pending owner selection |
+| Initial Vault AI recovery workflow | Ethereum mainnet, `1` | First supported claim contract and live connection pending validation |
+| FUN discovery and development | Sepolia, `11155111` | Separate, explicitly selected testnet context |
 
-No proposed recovery feature is considered approved or available until its threat model, permissions, implementation and user disclosures have been independently reviewed and documented.
+Identify every asset by chain ID and full contract address. A token symbol alone is insufficient. Additional networks require their own supported provider and contract configuration.
 
-## Planned technical flow
+## Vault AI and recovery
 
-1. The holder connects or creates a compatible user-controlled wallet.
-2. SafeVault reads approved public chain data through configured network providers.
-3. The application prepares a transaction request and displays the critical details.
-4. The holder's wallet signs or rejects the request.
-5. Only a signed transaction is submitted to the selected blockchain network.
-6. SafeVault displays pending, confirmed or failed status using independently verifiable network data.
+Botpress configures the Vault AI workspace agent: instructions, knowledge, workflows, tool bindings, and case records. SafeVault supplies the wallet interface and authorization path. Agent setup can progress while provider connections and wallet modules are still being configured.
 
-SafeVault may prepare, display and monitor a transaction, but it must not silently authorize one on the holder's behalf.
+| Finding | Required interpretation |
+| --- | --- |
+| Asset visible | A holding or transfer was observed at a particular address and chain. |
+| Candidate claim | A contract or protocol indicator supports further investigation. |
+| Validated eligibility | A supported contract adapter has checked the exact network, wallet entitlement, token, amount, recipient, required proof, relevant state, and a current simulation where applicable. |
+| Confirmed recovery | Execution succeeded and the expected asset movement or protocol outcome was verified. |
 
-## Planned capabilities
+A positive token balance, an ABI method name, or source-code verification alone does not establish claim eligibility. Preserve evidence sources, the queried block/time, and scan coverage. An unavailable provider or unsupported protocol produces an incomplete/unsupported result rather than a conclusion that no assets exist. Unknown values remain explicitly pending.
 
-SafeVault development may include:
+## Current implementation evidence
 
-- creation or connection of a user-controlled Digital Asset Vault;
-- wallet-based authentication and signature verification;
-- supported-asset balances and transaction history;
-- receiving and transferring approved blockchain assets;
-- Ethereum-compatible network support;
-- Vault Coin™ (VLT) display and transaction support;
-- network, address and transaction validation;
-- fee estimation, confirmation tracking and failure reporting; and
-- secure session and wallet-connection management.
+The private SafeVault source baseline reviewed for this publication is `989a312803c18aa0b0badaf88f627053a4fa86b2`. Its current application is a presentation shell with environment/chain validation and build packaging. The approved smart-account architecture is documented separately from those implemented components.
 
-These capabilities remain planned until implementation, testing and approval are recorded.
+The VLT source baseline reviewed is `80e8634ac4d0f1f16b34c94a046c6f1ae4a82527`, following PR #7. Older published test totals are historical results for their recorded commits. VLT's production target is Ethereum mainnet; FUN has its own Sepolia records.
 
-## SafeVault and Vault Coin
+## Implementation milestones
 
-SafeVault and Vault Coin are separate but connected projects.
+| Milestone | Next concrete input or evidence |
+| --- | --- |
+| Homebase initialization | Selected account implementation/factory and deployment model |
+| User authorization and recovery | Selected holder authentication and recovery design |
+| Operation execution | EntryPoint, bundler, gas configuration, and tested operation lifecycle |
+| External wallet connection | Supported connector and address/network/session behavior |
+| VLT integration | Confirmed mainnet proxy, implementation, and deployment receipt |
+| FUN integration | Owner-selected canonical Sepolia contract |
+| Vault AI discovery | Configured action bindings and successful normalized data responses |
+| Claim workflow | First supported protocol, wallet-specific eligibility evidence, and validated handoff |
 
-| System | Responsibility | Current status |
-|---|---|---|
-| SafeVault™ | Holder-facing wallet and asset-management environment | Foundation and pre-deployment design |
-| Vault Coin™ (VLT) | ERC-20 token contract, supply rules and token-level controls | Phase 2 pre-deployment review; not deployed |
-| BlackVault Public Network™ | Broader ecosystem identity and technical direction | Developing |
+The historical Rewards Network, cards, and Telegram Stars model remain outside this framework. Vault Coin Rewards is a distinct planned product surface.
 
-SafeVault may eventually display and submit holder-authorized VLT transactions. It does not replace or override the VLT contract, and it does not acquire the contract owner's minting, pausing, blacklist, administrative-burn, transfer, recovery or upgrade authority merely by integrating the token.
+See [Vault Coin integration](VAULT_COIN_FRAMEWORK.md) and the [ecosystem architecture](https://github.com/blackvault-opps/Blackvault-Public-Network-repo/blob/main/docs/ECOSYSTEM_ARCHITECTURE.md).
 
-The canonical Vault Coin technical source remains the [Vault Coin repository](https://github.com/blackvault-opps/Vault-Coin-VLT-project).
-
-## Related Vault Coin validation record
-
-The current Vault Coin `main` baseline is merge commit [`55c505bb2859fba492b39c4a37c7f85e4bc59ba7`](https://github.com/blackvault-opps/Vault-Coin-VLT-project/commit/55c505bb2859fba492b39c4a37c7f85e4bc59ba7). Foundry CI run #19 completed successfully on that baseline.
-
-The documented development record includes 53 passing tests, 128,000 stateful invariant calls, 96.61% line coverage for `VaultCoin.sol`, ABI inspection and a successful local deployment-script rehearsal. These results are repository evidence; they are not an independent audit or blockchain deployment record.
-
-Vault Coin has not been deployed. No verified VLT proxy address, implementation address or deployment transaction is currently recorded. The next repository-approved gate is live read-only Sepolia verification, followed by a no-broadcast Sepolia fork simulation and deployment-cost estimate.
-
-## Current SafeVault status
-
-The SafeVault public repository currently contains the approved project overview and the published Vault Coin integration framework. It does not yet contain a verified production wallet implementation or public SafeVault blockchain deployment.
-
-At this stage:
-
-- the self-custody policy and primary security boundaries are documented;
-- the repository is public and identified as pre-deployment software;
-- architecture and implementation decisions remain under development;
-- no independent SafeVault security audit is recorded;
-- production deployment has not been authorized; and
-- real-asset storage or transfers through SafeVault are not currently represented as available.
-
-## Next development gates
-
-The next SafeVault work should convert the confirmed principles into reviewable technical artifacts:
-
-1. approve the application architecture and supported network model;
-2. complete a wallet-connection, signing and session threat model;
-3. define local versus on-chain data boundaries;
-4. build a non-custodial prototype using test networks and test assets;
-5. test address validation, chain switching, transaction review and failure states;
-6. complete dependency, static-analysis and security review; and
-7. document a controlled testnet release before any production-readiness decision.
-
-## Publication status
-
-This page records the current approved framework and verified development status as of September 4, 2026. It does not announce a live wallet, deployed VLT token, completed audit, production release or authorization to deposit real assets.
-
-Copyright © 2026 BlackVault Public Network™. All rights reserved.
+Technical references: [ERC-4337 account abstraction](https://eips.ethereum.org/EIPS/eip-4337), [EIP-7702 account code delegation](https://eips.ethereum.org/EIPS/eip-7702), and [Etherscan API documentation](https://docs.etherscan.io/introduction). These describe available standards and provider interfaces; project support is recorded in the implementation milestones above.
